@@ -1,24 +1,15 @@
 package eu.mrndesign.matned.model.audit;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import eu.mrndesign.matned.model.security.User;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.AbstractAuditable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.lang.Nullable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Optional;
 
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
@@ -38,9 +29,11 @@ public abstract class BaseEntity implements AuditInterface{
     private Date updateTime;
 
     @CreatedBy
+    @Column(name = "made_by")
     private String createdBy;
 
     @LastModifiedBy
+    @Column(name = "updated_by")
     private String lastModifiedBy;
 
     @Version

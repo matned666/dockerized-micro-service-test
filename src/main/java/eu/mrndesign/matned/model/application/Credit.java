@@ -13,10 +13,10 @@ import javax.persistence.Table;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "CREDIT_ENTITY")
-public class Credit extends BaseEntity {
+public class Credit extends BaseEntity implements Editional<CreditDTO> {
 
-    public static Credit create(CreditDTO applied){
-        return new Credit(applied != null? applied.getCreditName() : null);
+    public static Credit create(CreditDTO applied) {
+        return new Credit(applied != null ? applied.getCreditName() : null);
     }
 
     @Column(name = "credit_name")
@@ -38,5 +38,13 @@ public class Credit extends BaseEntity {
         return "Credit{" +
                 "creditName='" + creditName + '\'' +
                 '}';
+    }
+
+    @Override
+    public void applyChangesFrom(CreditDTO data) {
+        if (data != null)
+            if (data.getCreditName() != null)
+                if (!data.getCreditName().isEmpty())
+                    this.creditName = data.getCreditName();
     }
 }

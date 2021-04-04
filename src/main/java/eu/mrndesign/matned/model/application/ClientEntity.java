@@ -9,10 +9,11 @@ import javax.persistence.*;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "CLIENT_ENTITY")
-public class ClientEntity extends BaseEntity {
+public class ClientEntity extends BaseEntity implements EditionCreditInfo<ClientDTO> {
 
-    public static ClientEntity create(ClientDTO applied, Credit credit){
-        if (applied != null) return new ClientEntity(applied.getFirstName(), applied.getLastName(), applied.getPesel(), credit);
+    public static ClientEntity create(ClientDTO applied, Credit credit) {
+        if (applied != null)
+            return new ClientEntity(applied.getFirstName(), applied.getLastName(), applied.getPesel(), credit);
         else return new ClientEntity();
     }
 
@@ -52,5 +53,25 @@ public class ClientEntity extends BaseEntity {
 
     public Credit getCredit() {
         return credit;
+    }
+
+    @Override
+    public void applyChangesFrom(ClientDTO data) {
+        if (data != null) {
+            if (data.getFirstName() != null)
+                if (!data.getFirstName().isEmpty())
+                    this.firstName = data.getFirstName();
+            if (data.getLastName() != null)
+                if (!data.getLastName().isEmpty())
+                    this.lastName = data.getLastName();
+            if (data.getPesel() != null)
+                if (!data.getPesel().isEmpty())
+                    this.pesel = data.getPesel();
+        }
+    }
+
+    @Override
+    public void setCreditTo(Credit newData) {
+        this.credit = newData;
     }
 }

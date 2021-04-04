@@ -9,9 +9,9 @@ import javax.persistence.*;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "PRODUCT_ENTITY")
-public class Product extends BaseEntity {
+public class Product extends BaseEntity implements EditionCreditInfo<ProductDTO> {
 
-    public static Product create(ProductDTO applied, Credit credit){
+    public static Product create(ProductDTO applied, Credit credit) {
         if (applied != null) return new Product(applied.getProductName(), applied.getProductValue(), credit);
         else return new Product();
     }
@@ -54,5 +54,21 @@ public class Product extends BaseEntity {
                 ", productValue=" + productValue +
                 ", credit=" + credit +
                 '}';
+    }
+
+    @Override
+    public void applyChangesFrom(ProductDTO data) {
+        if (data != null) {
+            if (data.getProductName() != null)
+                if (!data.getProductName().isEmpty())
+                    this.productName = data.getProductName();
+            if (data.getProductValue() != null)
+                this.productValue = data.getProductValue();
+        }
+    }
+
+    @Override
+    public void setCreditTo(Credit newData) {
+        this.credit = newData;
     }
 }

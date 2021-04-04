@@ -6,7 +6,7 @@ import eu.mrndesign.matned.model.security.User;
 import eu.mrndesign.matned.model.security.UserRole;
 import eu.mrndesign.matned.repository.UserRepository;
 import eu.mrndesign.matned.repository.UserRoleRepository;
-import eu.mrndesign.matned.service.UserService;
+import eu.mrndesign.matned.service.SecurityService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import java.util.List;
 
 import static eu.mrndesign.matned.JsonOps.asJsonString;
-import static eu.mrndesign.matned.service.UserService.USER_NOT_FOUND;
+import static eu.mrndesign.matned.service.SecurityService.USER_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,7 +43,7 @@ class UserControllerIntegrationTest {
     @Autowired
     private UserRoleRepository userRoleRepository;
     @Autowired
-    private UserService userService;
+    private SecurityService securityService;
 
 
     private UserDTO defaultUser;
@@ -85,7 +85,7 @@ class UserControllerIntegrationTest {
                     .andExpect(status().isOk())
                     .andReturn();
 
-            assertThrows(RuntimeException.class, () -> userService.findUserByLogin(login), USER_NOT_FOUND);
+            assertThrows(RuntimeException.class, () -> securityService.findUserByLogin(login), USER_NOT_FOUND);
         }
     }
 

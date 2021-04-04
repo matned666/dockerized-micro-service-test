@@ -1,6 +1,6 @@
 package eu.mrndesign.matned.config;
 
-import eu.mrndesign.matned.service.UserService;
+import eu.mrndesign.matned.service.SecurityService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -14,15 +14,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaAuditing(auditorAwareRef="auditorProvider")
 public class AuditConfig {
 
-    private final UserService userService;
+    private final SecurityService securityService;
 
-    public AuditConfig(UserService userService) {
-        this.userService = userService;
+    public AuditConfig(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
     @Bean
     public AuditorAware<String> auditorProvider() {
-        return new AuditorAwareImpl(userService);
+        return new AuditorAwareImpl(securityService);
     }
 
 }

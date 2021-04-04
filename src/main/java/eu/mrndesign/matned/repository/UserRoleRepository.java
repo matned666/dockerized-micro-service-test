@@ -19,4 +19,7 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
 
     @Query("select ur from User u join u.roles ur where u.login = :user_login")
     List<UserRole> findByUserLogin(@Param("user_login") String login);
+
+    @Query("select case when count(ur)> 0 then true else false end from UserRole ur")
+    boolean checkConnection();
 }

@@ -3,7 +3,7 @@ package eu.mrndesign.matned.controller;
 import eu.mrndesign.matned.dto.UserDTO;
 import eu.mrndesign.matned.dto.UserRegistrationDTO;
 import eu.mrndesign.matned.model.security.UserRole;
-import eu.mrndesign.matned.service.UserService;
+import eu.mrndesign.matned.service.SecurityService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class UserControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private UserService userService;
+    private SecurityService securityService;
 
     private List<UserDTO> allUsers;
 
@@ -57,7 +57,7 @@ class UserControllerTest {
     @WithMockUser(roles = "MANAGER")
     void getAllUsersList() throws Exception {
 
-        Mockito.doReturn(allUsers).when(userService).findAll();
+        Mockito.doReturn(allUsers).when(securityService).findAll();
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/users")
@@ -74,7 +74,7 @@ class UserControllerTest {
     @WithMockUser(roles = {"PUBLISHER", "USER", "MANAGER"})
     void getSingleUser() throws Exception {
 
-        Mockito.doReturn(allUsers.get(0)).when(userService).findUserById(any());
+        Mockito.doReturn(allUsers.get(0)).when(securityService).findUserById(any());
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/users/0")
@@ -91,7 +91,7 @@ class UserControllerTest {
     @DisplayName("DELETE /users/0 test - user with id deleted status 200")
     @WithMockUser(roles = {"MANAGER", "PUBLISHER", "USER"})
     void deleteSingleUser() throws Exception {
-        Mockito.doReturn(allUsers).when(userService).deleteUser(any());
+        Mockito.doReturn(allUsers).when(securityService).deleteUser(any());
 
         mockMvc.perform(
                 MockMvcRequestBuilders.delete("/users/0")
@@ -118,7 +118,7 @@ class UserControllerTest {
     @DisplayName("POST /users test - user status 200")
     @WithMockUser(roles = {"PUBLISHER", "USER"})
     void addUserStatusOk() throws Exception {
-        Mockito.doReturn(allUsers.get(0)).when(userService).add(any());
+        Mockito.doReturn(allUsers.get(0)).when(securityService).add(any());
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/users")
@@ -149,7 +149,7 @@ class UserControllerTest {
     @DisplayName("POST /users/0 test - user status 200")
     @WithMockUser(roles = {"PUBLISHER", "USER"})
     void updateUserLoginStatusOk() throws Exception {
-        Mockito.doReturn(allUsers.get(0)).when(userService).updateLogin(any(), any());
+        Mockito.doReturn(allUsers.get(0)).when(securityService).updateLogin(any(), any());
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/users/0")
@@ -183,7 +183,7 @@ class UserControllerTest {
     void updateUserPasswordStatusOk() throws Exception {
         UserRegistrationDTO registrationDTO = new UserRegistrationDTO("test@test1.tst","test123");
         registrationDTO.setPasswordConfirm("test123");
-        Mockito.doReturn(allUsers.get(0)).when(userService).updatePassword(any(), any());
+        Mockito.doReturn(allUsers.get(0)).when(securityService).updatePassword(any(), any());
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/users/0/password")
@@ -227,7 +227,7 @@ class UserControllerTest {
     @DisplayName("POST /users/0/add-role test - user status 200")
     @WithMockUser(roles = {"PUBLISHER", "CEO", "MANAGER", "USER"})
     void addUserRoleStatusOk() throws Exception {
-        Mockito.doReturn(allUsers.get(0)).when(userService).assignNewRole(any(), any());
+        Mockito.doReturn(allUsers.get(0)).when(securityService).assignNewRole(any(), any());
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/users/0/add-role/"+UserRole.Role.ADMIN.name())
@@ -254,7 +254,7 @@ class UserControllerTest {
     @DisplayName("POST /users/0/take-away-role test - user status 200")
     @WithMockUser(roles = {"PUBLISHER", "CEO", "MANAGER", "USER"})
     void takeAwayUserRoleStatusOk() throws Exception {
-        Mockito.doReturn(allUsers.get(0)).when(userService).takeAwayRole(any(), any());
+        Mockito.doReturn(allUsers.get(0)).when(securityService).takeAwayRole(any(), any());
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/users/0/take-away-role/"+UserRole.Role.BANNED.name())
