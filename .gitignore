@@ -2,3 +2,7 @@
 /target/
 /create-credit.iml
 /src/main/resources/application-dev.properties
+/lib/
+/credit/.mvn/
+/product/.mvn/
+/client/.mvn/

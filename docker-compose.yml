@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+
+  credit_app:
+    image: 'credit:latest'
+    build:
+      context: ./
+    container_name: credit
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/create_credit
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=pass123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - 8089:8080
+
+
+  client_app:
+    image: 'client:latest'
+    build:
+      context: ./
+    container_name: client
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/create_credit
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=pass123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - 8090:8080
+
+
+  product_app:
+    image: 'product:latest'
+    build:
+      context: ./
+    container_name: product
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/create_credit
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=pass123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - 8091:8080
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_DB=create_credit
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass123

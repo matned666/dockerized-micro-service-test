@@ -10,9 +10,10 @@
 	</parent>
 	<groupId>eu.mrndesign.matned</groupId>
 	<artifactId>create-credit</artifactId>
-	<version>ChocoladeIcecream</version>
+	<version>2.4.3</version>
 	<name>create-credit</name>
 	<description>Description</description>
+	<packaging>pom</packaging>
 
 	<developers>
 		<developer>
@@ -35,6 +36,12 @@
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 
+	<modules>
+		<module>client</module>
+		<module>credit</module>
+		<module>product</module>
+	</modules>
+
 	<dependencies>
 
 		<!--        SPRING ESSENTIALS-->
@@ -47,12 +54,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!--        SECURITY-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-
 		<!--        DATABASE-->
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -60,29 +61,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!--       VALIDATION-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.passay/passay -->
-		<dependency>
-			<groupId>org.passay</groupId>
-			<artifactId>passay</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>30.0-jre</version>
-		</dependency>
-
-		<!--        JSON GSON-->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.8.5</version>
-		</dependency>
 
 		<!--        TESTING -->
 		<dependency>
@@ -96,11 +74,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
@@ -111,27 +85,36 @@
 			<version>2.26.3</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>3.5.10</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.pitest/pitest -->
-		<dependency>
-			<groupId>org.pitest</groupId>
-			<artifactId>pitest</artifactId>
-			<version>1.5.2</version>
-		</dependency>
 	</dependencies>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>repository.spring.release</id>
+			<name>Spring GA Repository</name>
+			<url>https://repo.spring.io/plugins-release/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<repositories>
+		<repository>
+			<id>repository.spring.milestone</id>
+			<name>Spring Milestone Repository</name>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${parent.version}</version>
+				<version>${project.parent.version}</version>
 			</plugin>
 		</plugins>
 	</build>

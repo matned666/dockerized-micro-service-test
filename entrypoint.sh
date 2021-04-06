@@ -1,9 +1,17 @@
-cd src/main/docker || exit
+#!/bin/bash
+
 sudo docker-compose down
-cd ../../.. || exit
+
+cd client || exit
 sudo mvn clean package -o -Dmaven.test.skip=true
-sudo rm src/main/docker/create-credit-ChocoladeIcecream.jar
-sudo cp target/create-credit-ChocoladeIcecream.jar src/main/docker
-cd src/main/docker || exit
+cd .. || exit
+
+cd credit || exit
+sudo mvn clean package -o -Dmaven.test.skip=true
+cd .. || exit
+
+cd product || exit
+sudo mvn clean package -o -Dmaven.test.skip=true
+cd .. || exit
+
 sudo docker-compose up --force-recreate --build
-cd ../../.. || exit
