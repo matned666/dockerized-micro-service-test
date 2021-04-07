@@ -1,6 +1,9 @@
 package eu.mrndesign.matned.service;
 
+import eu.mrndesign.matned.dto.ClientDTO;
 import eu.mrndesign.matned.dto.CreditDTO;
+import eu.mrndesign.matned.dto.ProductDTO;
+import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.model.Credit;
 import eu.mrndesign.matned.repository.CreditRepository;
 import org.springframework.stereotype.Service;
@@ -15,9 +18,12 @@ import static eu.mrndesign.matned.utils.ErrorMessages.CREDIT_NOT_FOUND;
 public class CreditService extends BaseService {
 
     private final CreditRepository creditRepository;
+    private final String host;
 
-    public CreditService(CreditRepository creditRepository) {
+    public CreditService(CreditRepository creditRepository,
+                         String host) {
         this.creditRepository = creditRepository;
+        this.host = host;
     }
 
     public List<CreditDTO> findAllCredits(Integer page, Integer itemsPerPage, String[] sortBy) throws ServerError {
@@ -32,7 +38,7 @@ public class CreditService extends BaseService {
         return CreditDTO.apply(getGreditById(id));
     }
 
-    public CreditDTO saveCredit(CreditDTO data) throws ServerError {
+    public CreditDTO saveCredit(CreditDTO data){
         return CreditDTO.apply(creditRepository.save(Credit.create(data)));
     }
 
@@ -48,5 +54,33 @@ public class CreditService extends BaseService {
     private Credit getGreditById(Long creditId) throws ServerError {
         return creditRepository.findById(creditId).orElseThrow(() -> new ServerError(CREDIT_NOT_FOUND, new Error()));
     }
+
+    @Override
+    public CreditDTO createCreditData(Long id, ProvidedDataDTO creditData) throws ServerError {
+        return CreditDTO.createFromProvidedData(id, creditData);
+    }
+
+    @Override
+    public ProductDTO createProductData(Long id, ProvidedDataDTO creditData) throws ServerError {
+        return ProductDTO.createFromCreditData(id, creditData);
+    }
+
+    @Override
+    public ClientDTO createClientData(Long id, ProvidedDataDTO creditData) throws ServerError {
+         return ClientDTO.createFromCreditData(id, creditData);
+
+    }
+
+    @Override
+    public CreditDTO revertChanges(Long id) {
+
+        return null;
+    }
+
+    @Override
+    public String url(Integer port) {
+        return host+":"+port;
+    }
+
 
 }

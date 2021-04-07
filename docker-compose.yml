@@ -3,6 +3,7 @@ version: '3.9'
 services:
 
   credit_app:
+
     image: 'credit:latest'
     build:
       context: ./
@@ -10,15 +11,19 @@ services:
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/create_credit
-      - SPRING_DATASOURCE_USERNAME=user
-      - SPRING_DATASOURCE_PASSWORD=pass123
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - HOST_NAME=${HOST}
+      - CLIENT_PORT=${PORT2}
+      - PRODUCT_PORT=${PORT3}
     ports:
-      - 8089:8080
+      - ${PORT1}:8080
 
 
   client_app:
+
     image: 'client:latest'
     build:
       context: ./
@@ -26,15 +31,19 @@ services:
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/create_credit
-      - SPRING_DATASOURCE_USERNAME=user
-      - SPRING_DATASOURCE_PASSWORD=pass123
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - HOST_NAME=${HOST}
+      - CREDIT_PORT=${PORT1}
+      - PRODUCT_PORT=${PORT3}
     ports:
-      - 8090:8080
+      - ${PORT2}:8080
 
 
   product_app:
+
     image: 'product:latest'
     build:
       context: ./
@@ -42,17 +51,21 @@ services:
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/create_credit
-      - SPRING_DATASOURCE_USERNAME=user
-      - SPRING_DATASOURCE_PASSWORD=pass123
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${POSTGRES_DB}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - HOST_NAME=${HOST}
+      - CLIENT_PORT=${PORT2}
+      - CREDIT_PORT=${PORT1}
     ports:
-      - 8091:8080
+      - ${PORT3}:8080
 
   db:
+
     image: 'postgres:13.1-alpine'
     container_name: db
     environment:
-      - POSTGRES_DB=create_credit
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=pass123
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}

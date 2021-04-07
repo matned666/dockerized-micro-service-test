@@ -1,32 +1,34 @@
 package eu.mrndesign.matned.dto;
 
-import eu.mrndesign.matned.model.ClientEntity;
+import eu.mrndesign.matned.utils.ErrorMessages;
 
+import java.rmi.ServerError;
 import java.util.Objects;
+
+import static eu.mrndesign.matned.utils.ErrorMessages.EMPTY_DATA_PROVIDED;
 
 public class ClientDTO extends BaseDTO{
 
-    public static ClientDTO apply(ClientEntity applied){
-        return new ClientDTO(applied);
-    }
+    public static ClientDTO createFromCreditData(Long id, ProvidedDataDTO creditData) throws ServerError {
+        if (creditData != null && id != null) {
+            return new ClientDTO(creditData.getFirstName(), creditData.getLastName(), creditData.getPesel(), id);
+        } else
+            throw new ServerError(EMPTY_DATA_PROVIDED, new Error());    }
 
     private String firstName;
     private String lastName;
     private String pesel;
+
     private Long creditId;
 
     public ClientDTO() {
     }
 
-    private ClientDTO(ClientEntity applied) {
-        super(applied);
-        if (applied != null) {
-            this.id = applied.getId();
-            this.firstName = applied.getFirstName();
-            this.lastName = applied.getLastName();
-            this.pesel = applied.getPesel();
-            this.creditId = applied.getCredit();
-        }
+    public ClientDTO(String firstName, String lastName, String pesel, Long creditId) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pesel = pesel;
+        this.creditId = creditId;
     }
 
     public String getFirstName() {
