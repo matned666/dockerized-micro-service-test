@@ -1,16 +1,11 @@
 package eu.mrndesign.matned.service;
 
-import eu.mrndesign.matned.dto.ClientDTO;
-import eu.mrndesign.matned.dto.CreditDTO;
-import eu.mrndesign.matned.dto.ProductDTO;
-import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.rmi.ServerError;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,13 +61,6 @@ public abstract class BaseService{
         }
         return pageable;
     }
-
-
-    public abstract ProductDTO createProductData(Long id, ProvidedDataDTO creditData) throws ServerError;
-
-    public abstract ClientDTO createClientData(Long id, ProvidedDataDTO creditData) throws ServerError;
-
-    public abstract CreditDTO revertChanges(Long id);
 
     public abstract String url(Integer port);
 }

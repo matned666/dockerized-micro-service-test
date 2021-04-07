@@ -1,6 +1,6 @@
 package eu.mrndesign.matned.dto;
 
-public class ProvidedDataDTO extends BaseDTO {
+public class ProvidedDataDTO{
 
     private Long creditId;
     private String creditName;
@@ -15,10 +15,6 @@ public class ProvidedDataDTO extends BaseDTO {
 
     public Long getCreditId() {
         return creditId;
-    }
-
-    public void setCreditId(Long creditId) {
-        this.creditId = creditId;
     }
 
     public String getCreditName() {

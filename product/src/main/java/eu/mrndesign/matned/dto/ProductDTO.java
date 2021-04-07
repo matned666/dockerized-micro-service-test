@@ -1,10 +1,23 @@
 package eu.mrndesign.matned.dto;
 
 import eu.mrndesign.matned.model.Product;
+import eu.mrndesign.matned.utils.ErrorMessages;
 
+import java.rmi.ServerError;
 import java.util.Objects;
 
+import static eu.mrndesign.matned.utils.ErrorMessages.EMPTY_DATA_PROVIDED;
+
 public class ProductDTO extends BaseDTO{
+
+
+
+    public static ProductDTO createFromProvidedData(ProvidedDataDTO creditData) throws ServerError {
+        if (creditData != null) {
+            return new ProductDTO(creditData.getProductName(), creditData.getProductValue(), creditData.getCreditId());
+        } else
+            throw new ServerError(EMPTY_DATA_PROVIDED, new Error());
+    }
 
     public static ProductDTO apply(Product applied){
         return new ProductDTO(applied);
@@ -15,6 +28,12 @@ public class ProductDTO extends BaseDTO{
     private Long creditId;
 
     public ProductDTO() {
+    }
+
+    public ProductDTO(String productName, Double productValue, Long creditId) {
+        this.productName = productName;
+        this.productValue = productValue;
+        this.creditId = creditId;
     }
 
     private ProductDTO(Product applied) {

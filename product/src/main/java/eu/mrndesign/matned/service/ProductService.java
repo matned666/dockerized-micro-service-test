@@ -15,9 +15,11 @@ import static eu.mrndesign.matned.utils.ErrorMessages.PRODUCT_NOT_FOUND;
 public class ProductService extends BaseService{
 
     private final ProductRepository productRepository;
+    private final String host;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, String host) {
         this.productRepository = productRepository;
+        this.host = host;
     }
 
     public List<ProductDTO> findAllProducts(Integer page, Integer itemsPerPage, String[] sortBy) throws ServerError {
@@ -42,7 +44,15 @@ public class ProductService extends BaseService{
         return ProductDTO.apply(productRepository.save(Product.create(data)));
     }
 
+    @Override
+    public String url(Integer port) {
+        return host+":"+port;
+    }
 
+    @Override
+    public ProductDTO findProductByCreditId(Long creditId) throws ServerError {
+        return ProductDTO.apply(productRepository.findProductByCreditId(creditId).orElseThrow(()->new ServerError(PRODUCT_NOT_FOUND, new Error())));
+    }
 
 
     private Product getProductBy(Long id) throws ServerError {

@@ -1,9 +1,6 @@
 package eu.mrndesign.matned.service;
 
-import eu.mrndesign.matned.dto.ClientDTO;
 import eu.mrndesign.matned.dto.CreditDTO;
-import eu.mrndesign.matned.dto.ProductDTO;
-import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.model.Credit;
 import eu.mrndesign.matned.repository.CreditRepository;
 import org.springframework.stereotype.Service;
@@ -55,27 +52,6 @@ public class CreditService extends BaseService {
         return creditRepository.findById(creditId).orElseThrow(() -> new ServerError(CREDIT_NOT_FOUND, new Error()));
     }
 
-    @Override
-    public CreditDTO createCreditData(Long id, ProvidedDataDTO creditData) throws ServerError {
-        return CreditDTO.createFromProvidedData(id, creditData);
-    }
-
-    @Override
-    public ProductDTO createProductData(Long id, ProvidedDataDTO creditData) throws ServerError {
-        return ProductDTO.createFromCreditData(id, creditData);
-    }
-
-    @Override
-    public ClientDTO createClientData(Long id, ProvidedDataDTO creditData) throws ServerError {
-         return ClientDTO.createFromCreditData(id, creditData);
-
-    }
-
-    @Override
-    public CreditDTO revertChanges(Long id) {
-
-        return null;
-    }
 
     @Override
     public String url(Integer port) {

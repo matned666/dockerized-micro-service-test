@@ -17,10 +17,6 @@ public class ProvidedDataDTO extends BaseDTO {
         return creditId;
     }
 
-    public void setCreditId(Long creditId) {
-        this.creditId = creditId;
-    }
-
     public String getCreditName() {
         return creditName;
     }
