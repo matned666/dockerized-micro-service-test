@@ -9,21 +9,33 @@
         <version>2.4.3</version>
     </parent>
 
-    <artifactId>credit</artifactId>
 
+    <artifactId>credit</artifactId>
+    <version>ChocoladeIcecream</version>
     <name>credit</name>
     <description>Credit module for create-credit application</description>
-
     <properties>
         <java.version>11</java.version>
     </properties>
 
+
     <dependencies>
         <dependency>
-            <groupId>eu.mrndesign.matned</groupId>
-            <artifactId>create-credit</artifactId>
-            <version>2.4.3</version>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-standalone</artifactId>
+            <version>2.26.3</version>
+            <scope>compile</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.github.holgerbrandl/jsonbuilder -->
+        <dependency>
+            <groupId>com.github.holgerbrandl</groupId>
+            <artifactId>jsonbuilder</artifactId>
+            <version>0.9</version>
+        </dependency>
+
     </dependencies>
+
+
+
 
 </project>

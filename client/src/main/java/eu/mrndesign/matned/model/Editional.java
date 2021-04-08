@@ -1,4 +1,4 @@
-package model;
+package eu.mrndesign.matned.model;
 
 public interface Editional<DTO> {
 

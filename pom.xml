@@ -43,9 +43,6 @@
 	</modules>
 
 	<dependencies>
-		<!--		LOCAL  MODULE    -->
-
-
 
 		<!--        SPRING ESSENTIALS-->
 		<dependency>
@@ -111,6 +108,21 @@
 		</dependency>
 	</dependencies>
 
+	<pluginRepositories>
+		<pluginRepository>
+			<id>repository.spring.release</id>
+			<name>Spring GA Repository</name>
+			<url>https://repo.spring.io/plugins-release/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<repositories>
+		<repository>
+			<id>repository.spring.milestone</id>
+			<name>Spring Milestone Repository</name>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>

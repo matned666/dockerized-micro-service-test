@@ -1,7 +1,7 @@
 package eu.mrndesign.matned.controller;
 
 import eu.mrndesign.matned.dto.ClientDTO;
-import dto.ProvidedDataDTO;
+import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.service.ClientService;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class ClientController {
     @GetMapping
     public List<ClientDTO> showAllOrders(@RequestParam(defaultValue = "${default.sort.by}", name = "sort") String[] sort,
                                          @RequestParam(defaultValue = "${default.page.start}", name = "page") Integer page,
-                                         @RequestParam(defaultValue = "${default.page.size}", name = "amount") Integer amount) {
+                                         @RequestParam(defaultValue = "${default.page.size}", name = "amount") Integer amount) throws ServerError {
         return cS.findAllClients(page, amount, sort);
     }
 

@@ -1,15 +1,14 @@
 package eu.mrndesign.matned.dto;
 
-import dto.BaseDTO;
-import dto.ProvidedDataDTO;
 import eu.mrndesign.matned.model.Product;
+import eu.mrndesign.matned.utils.ErrorMessages;
 
 import java.rmi.ServerError;
 import java.util.Objects;
 
-import static utils.ErrorMessages.EMPTY_DATA_PROVIDED;
+import static eu.mrndesign.matned.utils.ErrorMessages.EMPTY_DATA_PROVIDED;
 
-public class ProductDTO extends BaseDTO {
+public class ProductDTO extends BaseDTO{
 
 
 
@@ -38,6 +37,7 @@ public class ProductDTO extends BaseDTO {
     }
 
     private ProductDTO(Product applied) {
+        super(applied);
         if (applied != null){
             this.id = applied.getId();
             this.productName = applied.getProductName();

@@ -1,6 +1,6 @@
-package dto;
+package eu.mrndesign.matned.dto;
 
-public class ProvidedDataDTO{
+public class ProvidedDataDTO extends BaseDTO {
 
     private Long creditId;
     private String creditName;
@@ -11,14 +11,6 @@ public class ProvidedDataDTO{
     private Double productValue;
 
     public ProvidedDataDTO() {
-    }
-
-    public void setCreditId(Long creditId) {
-        this.creditId = creditId;
-    }
-
-    public void setCreditName(String creditName) {
-        this.creditName = creditName;
     }
 
     public Long getCreditId() {

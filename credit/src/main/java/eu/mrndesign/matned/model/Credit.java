@@ -1,8 +1,6 @@
 package eu.mrndesign.matned.model;
 
 import eu.mrndesign.matned.dto.CreditDTO;
-import model.BaseEntity;
-import model.Editional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "CREDIT_ENTITY")
-public class Credit extends BaseEntity implements Editional<CreditDTO> {
+public class Credit extends BaseEntity implements Editional<CreditDTO>{
 
     public static Credit create(CreditDTO applied){
         return new Credit(applied != null? applied.getCreditName() : null);

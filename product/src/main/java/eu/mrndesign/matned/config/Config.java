@@ -18,7 +18,6 @@ public class Config {
         return new RestTemplate();
     }
 
-
     @Bean
     public Integer creditPort() { return this.creditPort; }
 

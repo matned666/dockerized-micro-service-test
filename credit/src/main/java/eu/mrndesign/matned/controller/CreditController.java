@@ -1,8 +1,8 @@
 package eu.mrndesign.matned.controller;
 
 
-import dto.ProvidedDataDTO;
 import eu.mrndesign.matned.dto.CreditDTO;
+import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.service.CreditService;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +42,7 @@ public class CreditController {
                                          @RequestParam(defaultValue = "${default.page.start}", name = "page")
                                                  Integer page,
                                          @RequestParam(defaultValue = "${default.page.size}", name = "amount")
-                                                     Integer amount) {
+                                                     Integer amount) throws ServerError {
         return cS.findAllCredits(page, amount, sort);
     }
 
@@ -72,7 +72,7 @@ public class CreditController {
 
     @GetMapping("/{creditId}/client")
     public void showClientByCreditId(@PathVariable Long creditId,
-                                     HttpServletResponse httpServletResponse) {
+                                     HttpServletResponse httpServletResponse) throws ServerError {
         String url = cS.url("client", clientPort)+"/"+creditId;
         httpServletResponse.setHeader("Location", url);
         httpServletResponse.setStatus(302);
@@ -80,13 +80,13 @@ public class CreditController {
 
     @GetMapping("/{creditId}/product")
     public void showProductByCreditId(@PathVariable Long creditId,
-                                     HttpServletResponse httpServletResponse) {
+                                     HttpServletResponse httpServletResponse) throws ServerError {
         String url = cS.url("product", productPort)+"/"+creditId;
         httpServletResponse.setHeader("Location", url);
         httpServletResponse.setStatus(302);    }
 
     @PostMapping("/client_resp")
-    public ProvidedDataDTO showClientByCreditId(@RequestBody ProvidedDataDTO data) {
+    public ProvidedDataDTO showClientByCreditId(@RequestBody ProvidedDataDTO data) throws ServerError {
         return data;
     }
 

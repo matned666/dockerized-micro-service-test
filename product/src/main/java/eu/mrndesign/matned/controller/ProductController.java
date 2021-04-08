@@ -1,7 +1,7 @@
 package eu.mrndesign.matned.controller;
 
-import dto.ProvidedDataDTO;
 import eu.mrndesign.matned.dto.ProductDTO;
+import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.service.ProductService;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +38,7 @@ public class ProductController {
                                           @RequestParam(defaultValue = "${default.page.start}", name = "page")
                                                   Integer page,
                                           @RequestParam(defaultValue = "${default.page.size}", name = "amount")
-                                                      Integer amount) {
+                                                      Integer amount) throws ServerError {
         return pS.findAllProducts(page, amount, sort);
     }
 

@@ -1,6 +1,6 @@
-package dto;
+package eu.mrndesign.matned.dto;
 
-import model.BaseEntity;
+import eu.mrndesign.matned.model.BaseEntity;
 
 public abstract class BaseDTO {
 

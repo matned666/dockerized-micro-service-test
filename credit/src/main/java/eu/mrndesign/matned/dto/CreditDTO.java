@@ -1,14 +1,12 @@
 package eu.mrndesign.matned.dto;
 
-import dto.BaseDTO;
-import dto.ProvidedDataDTO;
 import eu.mrndesign.matned.model.Credit;
 import wiremock.org.apache.commons.lang3.RandomStringUtils;
 
 import java.rmi.ServerError;
 import java.util.Objects;
 
-import static utils.ErrorMessages.EMPTY_DATA_PROVIDED;
+import static eu.mrndesign.matned.utils.ErrorMessages.EMPTY_DATA_PROVIDED;
 
 public class CreditDTO extends BaseDTO {
 
@@ -31,6 +29,7 @@ public class CreditDTO extends BaseDTO {
     }
 
     private CreditDTO(Credit applied) {
+        super(applied);
         if (applied != null) {
             this.id = applied.getId();
             this.creditName = applied.getCreditName();
