@@ -1,7 +1,6 @@
 package eu.mrndesign.matned.controller;
 
 
-import eu.mrndesign.matned.dto.ClientDTO;
 import eu.mrndesign.matned.dto.CreditDTO;
 import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.service.CreditService;
@@ -39,6 +38,11 @@ public class CreditController {
                                          @RequestParam(defaultValue = "${default.page.size}", name = "amount")
                                                      Integer amount) throws ServerError {
         return cS.findAllCredits(page, amount, sort);
+    }
+
+    @PostMapping("/save")
+    public CreditDTO saveCredit(){
+        return cS.saveCredit(new CreditDTO());
     }
 
 

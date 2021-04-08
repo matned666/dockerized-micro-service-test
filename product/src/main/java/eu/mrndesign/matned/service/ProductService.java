@@ -34,7 +34,7 @@ public class ProductService extends BaseService{
         return ProductDTO.apply(getProductBy(id));
     }
 
-    public ProductDTO saveProduct(ProductDTO data, Long creditId) throws ServerError {
+    public ProductDTO saveProduct(ProductDTO data){
         return ProductDTO.apply(productRepository.save(Product.create(data)));
     }
 
@@ -46,7 +46,7 @@ public class ProductService extends BaseService{
 
     @Override
     public String url(Integer port) {
-        return host+":"+port;
+        return "http://" +host+":"+port;
     }
 
     @Override

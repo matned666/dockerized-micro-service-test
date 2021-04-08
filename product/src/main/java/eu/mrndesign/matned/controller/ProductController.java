@@ -38,7 +38,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProvidedDataDTO> createCredit(@RequestBody ProvidedDataDTO data) throws ServerError {
-        pS.saveProduct(ProductDTO.createFromProvidedData(data), data.getCreditId());
+        pS.saveProduct(ProductDTO.createFromProvidedData(data));
         return ResponseEntity.ok().body(restTemplate.postForObject(pS.url(creditPort)+"/product_resp", data, ProvidedDataDTO.class));
     }
 

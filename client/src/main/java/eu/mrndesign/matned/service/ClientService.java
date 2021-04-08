@@ -46,7 +46,7 @@ public class ClientService extends BaseService{
 
     @Override
     public String url(Integer port) {
-        return host+":"+port;
+        return "http://" +host+":"+port;
     }
 
     @Override
