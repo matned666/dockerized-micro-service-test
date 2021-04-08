@@ -65,7 +65,7 @@ public abstract class BaseService{
     }
 
 
-    public abstract String url(Integer port);
+    public abstract String url(String host, Integer port);
 
     public abstract ProductDTO findProductByCreditId(Long creditId) throws ServerError;
 }

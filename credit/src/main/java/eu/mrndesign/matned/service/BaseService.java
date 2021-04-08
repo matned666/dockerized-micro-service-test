@@ -62,5 +62,5 @@ public abstract class BaseService{
         return pageable;
     }
 
-    public abstract String url(Integer port);
+    public abstract String url(String host, Integer port);
 }

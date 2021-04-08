@@ -3,8 +3,11 @@ package eu.mrndesign.matned.service;
 import eu.mrndesign.matned.dto.ProductDTO;
 import eu.mrndesign.matned.model.Product;
 import eu.mrndesign.matned.repository.ProductRepository;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.ServerError;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,12 +20,12 @@ public class ProductService extends BaseService{
     private final ProductRepository productRepository;
     private final String host;
 
-    public ProductService(ProductRepository productRepository, String host) {
+    public ProductService(ProductRepository productRepository) throws UnknownHostException {
         this.productRepository = productRepository;
-        this.host = host;
+        this.host = InetAddress.getLocalHost().getHostName();
     }
 
-    public List<ProductDTO> findAllProducts(Integer page, Integer itemsPerPage, String[] sortBy) throws ServerError {
+    public List<ProductDTO> findAllProducts(Integer page, Integer itemsPerPage, String[] sortBy) {
         return productRepository.findAll(getPageable(page, itemsPerPage, sortBy))
                 .getContent()
                 .stream()
@@ -45,7 +48,9 @@ public class ProductService extends BaseService{
     }
 
     @Override
-    public String url(Integer port) {
+    public String url(String host, Integer port) {
+        System.setProperty("proxyHost", host);
+        System.setProperty("proxyPort", String.valueOf(port));
         return "http://" +host+":"+port;
     }
 

@@ -1,13 +1,16 @@
 package eu.mrndesign.matned.model;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @MappedSuperclass
+@EnableAutoConfiguration
 public abstract class BaseEntity{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public Long getId() {

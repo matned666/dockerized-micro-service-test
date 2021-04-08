@@ -5,6 +5,8 @@ import eu.mrndesign.matned.model.ClientEntity;
 import eu.mrndesign.matned.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.ServerError;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,9 +19,10 @@ public class ClientService extends BaseService{
     private final ClientRepository clientRepository;
     private final String host;
 
-    public ClientService(ClientRepository clientRepository, String host) {
+
+    public ClientService(ClientRepository clientRepository) throws UnknownHostException {
         this.clientRepository = clientRepository;
-        this.host = host;
+        this.host = InetAddress.getLocalHost().getHostName();
     }
 
     public List<ClientDTO> findAllClients(Integer page, Integer itemsPerPage, String[] sortBy) throws ServerError {
@@ -45,7 +48,9 @@ public class ClientService extends BaseService{
     }
 
     @Override
-    public String url(Integer port) {
+    public String url(String host, Integer port) {
+        System.setProperty("proxyHost", host);
+        System.setProperty("proxyPort", String.valueOf(port));
         return "http://" +host+":"+port;
     }
 

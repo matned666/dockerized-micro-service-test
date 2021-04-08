@@ -8,9 +8,6 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class Config {
 
-    @Value("${host.name}")
-    private String host;
-
     @Value("${client.port}")
     private Integer clientPort;
 
@@ -23,10 +20,6 @@ public class Config {
         return new RestTemplate();
     }
 
-
-
-    @Bean
-    public String host() { return this.host; }
 
     @Bean
     public Integer clientPort() { return this.clientPort; }

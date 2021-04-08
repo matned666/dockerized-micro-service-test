@@ -3,7 +3,10 @@ package eu.mrndesign.matned.controller;
 import eu.mrndesign.matned.dto.ProductDTO;
 import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.service.ProductService;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,6 +27,9 @@ public class ProductController {
         this.pS = pS;
         this.creditPort = creditPort;
         this.restTemplate = restTemplate;
+        ClientHttpRequestFactory requestFactory = new
+                HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
+        restTemplate.setRequestFactory(requestFactory);
     }
 
     @GetMapping
@@ -39,7 +45,7 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProvidedDataDTO> createCredit(@RequestBody ProvidedDataDTO data) throws ServerError {
         pS.saveProduct(ProductDTO.createFromProvidedData(data));
-        return ResponseEntity.ok().body(restTemplate.postForObject(pS.url(creditPort)+"/product_resp", data, ProvidedDataDTO.class));
+        return ResponseEntity.ok().body(restTemplate.postForObject(pS.url("credit", creditPort)+"/product_resp", data, ProvidedDataDTO.class));
     }
 
     @GetMapping("/{creditId}")

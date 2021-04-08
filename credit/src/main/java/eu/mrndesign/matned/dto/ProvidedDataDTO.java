@@ -21,6 +21,10 @@ public class ProvidedDataDTO extends BaseDTO {
         this.creditId = creditId;
     }
 
+    public void setCreditName(String creditName) {
+        this.creditName = creditName;
+    }
+
     public String getCreditName() {
         return creditName;
     }
@@ -57,6 +61,8 @@ public class ProvidedDataDTO extends BaseDTO {
                 ", productValue=" + productValue +
                 '}';
     }
+
+
 }
 
 

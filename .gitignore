@@ -6,3 +6,6 @@
 /credit/.mvn/
 /product/.mvn/
 /client/.mvn/
+/client/src/main/resources/application-dev.properties
+/credit/src/main/resources/application-dev.properties
+/product/src/main/resources/application-dev.properties

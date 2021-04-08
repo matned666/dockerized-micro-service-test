@@ -3,8 +3,11 @@ package eu.mrndesign.matned.service;
 import eu.mrndesign.matned.dto.CreditDTO;
 import eu.mrndesign.matned.model.Credit;
 import eu.mrndesign.matned.repository.CreditRepository;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.ServerError;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,10 +20,9 @@ public class CreditService extends BaseService {
     private final CreditRepository creditRepository;
     private final String host;
 
-    public CreditService(CreditRepository creditRepository,
-                         String host) {
+    public CreditService(CreditRepository creditRepository) throws UnknownHostException {
         this.creditRepository = creditRepository;
-        this.host = host;
+        this.host = InetAddress.getLocalHost().getHostName();
     }
 
     public List<CreditDTO> findAllCredits(Integer page, Integer itemsPerPage, String[] sortBy) throws ServerError {
@@ -54,7 +56,9 @@ public class CreditService extends BaseService {
 
 
     @Override
-    public String url(Integer port) {
+    public String url(String host,Integer port) {
+        System.setProperty("proxyHost", host);
+        System.setProperty("proxyPort", String.valueOf(port));
         return "http://" +host+":"+port;
     }
 
