@@ -1,4 +1,4 @@
-package eu.mrndesign.matned.model;
+package model;
 
 public interface EditionCreditInfo<DTO> extends Editional<DTO>{
 
