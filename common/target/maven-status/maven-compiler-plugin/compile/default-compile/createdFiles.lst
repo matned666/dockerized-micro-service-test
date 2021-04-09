@@ -1,0 +1,12 @@
+dto/ProvidedDataDTO.class
+validation/IsCorrectPesel.class
+utils/ErrorMessages.class
+model/Editional.class
+dto/BaseDTO.class
+service/BaseService.class
+model/EditionCreditInfo.class
+CommonApplication.class
+validation/IsNumericDoubleValidator.class
+model/BaseEntity.class
+validation/IsNumericDouble.class
+validation/IsCorrectPeselValidator.class

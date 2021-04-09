@@ -51,6 +51,26 @@ public class ProvidedDataDTO{
         this.creditName = creditName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPesel(String pesel) {
+        this.pesel = pesel;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setProductValue(String productValue) {
+        this.productValue = productValue;
+    }
+
     public Long getCreditId() {
         return creditId;
     }

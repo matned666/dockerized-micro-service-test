@@ -34,6 +34,12 @@
             <version>2.26.3</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>eu.mrndesign.matned</groupId>
+            <artifactId>product</artifactId>
+            <version>ChocoladeIcecream</version>
+            <scope>compile</scope>
+        </dependency>
         <!--        RANDOM STRINGS-->
     </dependencies>
 </project>

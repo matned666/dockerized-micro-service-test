@@ -8,6 +8,9 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class Config {
 
+    @Value("${credit.port}")
+    private Integer creditPort;
+
     @Value("${client.port}")
     private Integer clientPort;
 
@@ -20,6 +23,9 @@ public class Config {
         return new RestTemplate();
     }
 
+
+    @Bean
+    public Integer creditPort() { return this.creditPort; }
 
     @Bean
     public Integer clientPort() { return this.clientPort; }

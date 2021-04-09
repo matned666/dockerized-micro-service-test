@@ -1,6 +1,5 @@
 package eu.mrndesign.matned.controller;
 
-
 import dto.ProvidedDataDTO;
 import eu.mrndesign.matned.dto.CreditDTO;
 import eu.mrndesign.matned.service.CreditService;
@@ -21,15 +20,18 @@ public class CreditController {
 
     private final CreditService cS;
     private final Integer clientPort;
+    private final Integer creditPort;
     private final Integer productPort;
     private final RestTemplate restTemplate;
 
     public CreditController(CreditService cS,
                             Integer clientPort,
+                            Integer creditPort,
                             Integer productPort,
                             RestTemplate restTemplate) {
         this.cS = cS;
         this.clientPort = clientPort;
+        this.creditPort = creditPort;
         this.productPort = productPort;
         this.restTemplate = restTemplate;
         ClientHttpRequestFactory requestFactory = new
@@ -38,39 +40,38 @@ public class CreditController {
     }
 
     @GetMapping
-    public List<ProvidedDataDTO> getCredits(@RequestParam(defaultValue = "${default.sort.by}", name = "sort")
+    public List<ReceivedData> getCredits(@RequestParam(defaultValue = "${default.sort.by}", name = "sort")
                                                      String[] sort,
                                          @RequestParam(defaultValue = "${default.page.start}", name = "page")
                                                  Integer page,
                                          @RequestParam(defaultValue = "${default.page.size}", name = "amount")
-                                                     Integer amount) throws ServerError {
-        List<ProvidedDataDTO> creditList = cS.findAllCredits(page, amount, sort);
-        cS.addProductData(creditList);
-        cS.addClientData(creditList);
+                                                     Integer amount) {
+        List<ReceivedData> creditList = cS.findAllCredits(page, amount, sort);
+        cS.addProductData(creditList, productPort);
+        cS.addClientData(creditList, clientPort);
         return creditList;
     }
 
     @PostMapping
-    public ResponseEntity<ProvidedDataDTO> createCredit(@Valid @RequestBody ProvidedDataDTO data) throws ServerError {
+    public ReceivedData createCredit(@Valid @RequestBody ProvidedDataDTO data) throws ServerError {
         CreditDTO dto = cS.saveCredit(CreditDTO.createFromProvidedData(data));
         data.setCreditId(dto.getId());
         data.setCreditName(dto.getCreditName());
-        return ResponseEntity.ok().body(restTemplate.postForObject(cS.url("product", productPort), data, ProvidedDataDTO.class));
+        ResponseEntity.ok().body(restTemplate.postForObject(cS.url("product", productPort), data, ProvidedDataDTO.class));
+        ResponseEntity.ok().body(restTemplate.postForObject(cS.url("client", clientPort), data, ProvidedDataDTO.class));
+        return restTemplate.getForObject(cS.url("credit", creditPort)+"/credit/credit_response/"+dto.getId(), ReceivedData.class);
+
     }
 
-    @PostMapping("/product_resp")
-    public ResponseEntity<ProvidedDataDTO> responseFromProduct(@RequestBody ProvidedDataDTO data) {
-        return ResponseEntity.ok().body(restTemplate.postForObject(cS.url("client", clientPort), data, ProvidedDataDTO.class));
+    @GetMapping("/credit/credit_response/{id}")
+    public ReceivedData showCreatedCredit(@PathVariable Long id) throws ServerError {
+        return cS.getCreatedCredit(id, productPort, clientPort);
     }
 
-    @GetMapping("/credit/{id}")
-    public CreditDTO showCredit(@PathVariable Long id) throws ServerError {
-        return cS.findCreditById(id);
-    }
 
     @GetMapping("/{creditId}/client")
     public void showClientByCreditId(@PathVariable Long creditId,
-                                     HttpServletResponse httpServletResponse) throws ServerError {
+                                     HttpServletResponse httpServletResponse){
         String url = cS.url("client", clientPort)+"/"+creditId;
         httpServletResponse.setHeader("Location", url);
         httpServletResponse.setStatus(302);
@@ -78,15 +79,11 @@ public class CreditController {
 
     @GetMapping("/{creditId}/product")
     public void showProductByCreditId(@PathVariable Long creditId,
-                                     HttpServletResponse httpServletResponse) throws ServerError {
+                                     HttpServletResponse httpServletResponse){
         String url = cS.url("product", productPort)+"/"+creditId;
         httpServletResponse.setHeader("Location", url);
         httpServletResponse.setStatus(302);    }
 
-    @PostMapping("/client_resp")
-    public ProvidedDataDTO showClientByCreditId(@RequestBody ProvidedDataDTO data) throws ServerError {
-        return data;
-    }
 
 }
 

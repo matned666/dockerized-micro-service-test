@@ -1,10 +1,11 @@
 package eu.mrndesign.matned.service;
 
-import dto.ProvidedDataDTO;
+import eu.mrndesign.matned.controller.ReceivedData;
 import eu.mrndesign.matned.dto.CreditDTO;
 import eu.mrndesign.matned.model.Credit;
 import eu.mrndesign.matned.repository.CreditRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import service.BaseService;
 
 import java.rmi.ServerError;
@@ -17,22 +18,24 @@ import static utils.ErrorMessages.CREDIT_NOT_FOUND;
 public class CreditService extends BaseService {
 
     private final CreditRepository creditRepository;
+    private final RestTemplate restTemplate;
 
-    public CreditService(CreditRepository creditRepository){
+
+    public CreditService(CreditRepository creditRepository,
+                         RestTemplate restTemplate){
         this.creditRepository = creditRepository;
+        this.restTemplate = restTemplate;
     }
 
-    public List<ProvidedDataDTO> findAllCredits(Integer page, Integer itemsPerPage, String[] sortBy) {
-        List<ProvidedDataDTO> creditMap = new ArrayList<>();
+    public List<ReceivedData> findAllCredits(Integer page, Integer itemsPerPage, String[] sortBy) {
+        List<ReceivedData> creditList = new ArrayList<>();
         creditRepository.findAll(getPageable(page, itemsPerPage, sortBy))
                 .getContent()
                 .forEach(x-> {
-                    ProvidedDataDTO data = new ProvidedDataDTO();
-                    data.setCreditId(x.getId());
-                    data.setCreditName(x.getCreditName());
-                    creditMap.add(data);
+                    ReceivedData data = new ReceivedData(x.getId(), x.getCreditName());
+                    creditList.add(data);
                 });
-        return creditMap;
+        return creditList;
     }
 
     public CreditDTO findCreditById(Long id) throws ServerError {
@@ -57,11 +60,39 @@ public class CreditService extends BaseService {
     }
 
 
-    public void addProductData(List<ProvidedDataDTO> creditList) {
-
+    public void addProductData(List<ReceivedData> creditList, Integer productPort) {
+        creditList.forEach(x->{
+            ReceivedData product = getReceivedData("product", productPort, x.getCreditId());
+            try {
+                x.applyProduct(product);
+            } catch (ServerError serverError) {
+                System.out.println(serverError.getMessage());
+            }
+        });
     }
 
-    public void addClientData(List<ProvidedDataDTO> creditList) {
+    public void addClientData(List<ReceivedData> creditList, Integer clientPort) {
+        creditList.forEach(x->{
+            ReceivedData client =getReceivedData("client", clientPort, x.getCreditId());
+            try {
+                x.applyClient(client);
+            } catch (ServerError serverError) {
+                System.out.println(serverError.getMessage());
+            }
+        });
+    }
 
+    public ReceivedData getCreatedCredit(Long id, Integer productPort, Integer clientPort) throws ServerError {
+        Credit entity = getGreditById(id);
+        ReceivedData credit = new ReceivedData(entity.getId(), entity.getCreditName());
+        ReceivedData product = getReceivedData("product", productPort, entity.getId());
+        ReceivedData client = getReceivedData("client", clientPort, entity.getId());
+        credit.applyProduct(product);
+        credit.applyClient(client);
+        return credit;
+    }
+
+    private ReceivedData getReceivedData(String host, Integer clientPort, Long id) {
+        return restTemplate.getForObject(url(host, clientPort)+"/"+id, ReceivedData.class);
     }
 }
