@@ -55,8 +55,8 @@ page - page<br>
 sort[] - sorting option<br>
 
 example:<br>
-GET: localhost:8089?page=1&&amount=10&&sort=firstName,asc&&sort=creditName<br>
-shows records from page 1 with 10 records per page, sorted by first name asc and credit name asc
+GET: localhost:8089?page=0&&amount=10&&sort=firstName,asc&&sort=creditName<br>
+shows records from the first page with 10 records per page, sorted by first name asc and credit name asc
 
 ------------------------------
 #Tests

@@ -31,7 +31,7 @@ public class ClientEntity extends BaseEntity implements EditionCreditInfo<Client
     public ClientEntity() {
     }
 
-    private ClientEntity(String firstName, String lastName, String pesel, Long credit) {
+    public ClientEntity(String firstName, String lastName, String pesel, Long credit) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pesel = pesel;

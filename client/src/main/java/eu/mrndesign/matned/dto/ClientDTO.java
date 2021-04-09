@@ -11,6 +11,7 @@ import static utils.ErrorMessages.EMPTY_DATA_PROVIDED;
 
 public class ClientDTO extends BaseDTO {
 
+
     public static ClientDTO createFromProvidedData(ProvidedDataDTO creditData) throws ServerError {
         if (creditData != null) {
             return new ClientDTO(creditData.getFirstName(), creditData.getLastName(), creditData.getPesel(), creditData.getCreditId());
@@ -76,5 +77,14 @@ public class ClientDTO extends BaseDTO {
         return Objects.hash(firstName, lastName, pesel, creditId);
     }
 
-
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":" + id +
+                ",\"firstName\":\"" + firstName + '\"' +
+                ", \"lastName\":\"" + lastName + '\"' +
+                ", \"pesel\":\"" + pesel + '\"' +
+                ", \"creditId\":" + creditId +
+                '}';
+    }
 }
