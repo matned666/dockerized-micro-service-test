@@ -23,11 +23,11 @@ no security included
 making POST to `host:8089`<br>
 with json body as example:<br>
 `{`<br>
-`"firstName":"John",`<br>
-`"lastName":"Smith",`<br>
-`"pesel":"12345678",`<br>
-`"productName":"Luxury car",`<br>
-`"productValue":100000`<br>
+`"firstName":"John",`(min 2 signs, not null)<br>
+`"lastName":"Smith",`(min 2 signs, not null)<br>
+`"pesel":"xxxxxxxxxx",` (provide a valid pesel, not null)<br>
+`"productName":"Luxury car",`(min 5 signs, not null)<br>
+`"productValue":"100000.90"`(valid double number in String, not null)<br>
 `}`<br>
 
 #Tests

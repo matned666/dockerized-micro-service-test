@@ -1,4 +1,5 @@
-package eu.mrndesign.matned.model;
+package model;
+
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 

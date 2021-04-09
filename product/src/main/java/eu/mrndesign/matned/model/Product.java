@@ -1,6 +1,8 @@
 package eu.mrndesign.matned.model;
 
 import eu.mrndesign.matned.dto.ProductDTO;
+import model.BaseEntity;
+import model.EditionCreditInfo;
 
 import javax.persistence.*;
 

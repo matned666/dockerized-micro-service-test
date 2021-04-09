@@ -1,8 +1,8 @@
 package eu.mrndesign.matned.controller;
 
 
+import dto.ProvidedDataDTO;
 import eu.mrndesign.matned.dto.CreditDTO;
-import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.service.CreditService;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.rmi.ServerError;
 import java.util.List;
 
@@ -37,23 +38,20 @@ public class CreditController {
     }
 
     @GetMapping
-    public List<CreditDTO> showAllOrders(@RequestParam(defaultValue = "${default.sort.by}", name = "sort")
+    public List<ProvidedDataDTO> getCredits(@RequestParam(defaultValue = "${default.sort.by}", name = "sort")
                                                      String[] sort,
                                          @RequestParam(defaultValue = "${default.page.start}", name = "page")
                                                  Integer page,
                                          @RequestParam(defaultValue = "${default.page.size}", name = "amount")
                                                      Integer amount) throws ServerError {
-        return cS.findAllCredits(page, amount, sort);
+        List<ProvidedDataDTO> creditList = cS.findAllCredits(page, amount, sort);
+        cS.addProductData(creditList);
+        cS.addClientData(creditList);
+        return creditList;
     }
-
-    @PostMapping("/save")
-    public CreditDTO saveCredit(){
-        return cS.saveCredit(new CreditDTO());
-    }
-
 
     @PostMapping
-    public ResponseEntity<ProvidedDataDTO> createCredit(@RequestBody ProvidedDataDTO data) throws ServerError {
+    public ResponseEntity<ProvidedDataDTO> createCredit(@Valid @RequestBody ProvidedDataDTO data) throws ServerError {
         CreditDTO dto = cS.saveCredit(CreditDTO.createFromProvidedData(data));
         data.setCreditId(dto.getId());
         data.setCreditName(dto.getCreditName());

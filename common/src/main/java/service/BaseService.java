@@ -1,4 +1,4 @@
-package eu.mrndesign.matned.service;
+package service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +19,6 @@ public abstract class BaseService{
     protected Integer defaultPageSize;
     @Value("${default.sort.by}")
     protected String[] defaultSortBy;
-
 
 
     protected Sort.Direction getSortDirection(String direction) {
@@ -62,5 +61,10 @@ public abstract class BaseService{
         return pageable;
     }
 
-    public abstract String url(String host, Integer port);
+
+    public String url(String host, Integer port) {
+        System.setProperty("proxyHost", host);
+        System.setProperty("proxyPort", String.valueOf(port));
+        return "http://" +host+":"+port;
+    }
 }
