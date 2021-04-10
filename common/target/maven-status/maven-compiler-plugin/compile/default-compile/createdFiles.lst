@@ -2,6 +2,7 @@ dto/ProvidedDataDTO.class
 validation/IsCorrectPesel.class
 utils/ErrorMessages.class
 model/Editional.class
+utils/JsonOPS.class
 dto/BaseDTO.class
 service/BaseService.class
 model/EditionCreditInfo.class

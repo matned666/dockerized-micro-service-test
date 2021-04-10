@@ -57,8 +57,8 @@ public class CreditController {
         CreditDTO dto = cS.saveCredit(CreditDTO.createFromProvidedData(data));
         data.setCreditId(dto.getId());
         data.setCreditName(dto.getCreditName());
-        ResponseEntity.ok().body(restTemplate.postForObject(cS.url("product", productPort), data, ProvidedDataDTO.class));
-        ResponseEntity.ok().body(restTemplate.postForObject(cS.url("client", clientPort), data, ProvidedDataDTO.class));
+        restTemplate.postForObject(cS.url("product", productPort), data, ProvidedDataDTO.class);
+        restTemplate.postForObject(cS.url("client", clientPort), data, ProvidedDataDTO.class);
         return restTemplate.getForObject(cS.url("credit", creditPort)+"/credit/credit_response/"+dto.getId(), ReceivedData.class);
 
     }

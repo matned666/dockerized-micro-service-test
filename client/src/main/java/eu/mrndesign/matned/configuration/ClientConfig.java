@@ -9,12 +9,12 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 
 @Configuration
-public class Config {
+public class ClientConfig {
 
     @Value("${credit.port}")
     private Integer creditPort;
 
-    public Config() {
+    public ClientConfig() {
     }
 
     @Bean

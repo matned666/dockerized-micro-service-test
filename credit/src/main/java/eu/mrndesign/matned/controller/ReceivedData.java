@@ -3,6 +3,7 @@ package eu.mrndesign.matned.controller;
 import dto.ProvidedDataDTO;
 
 import java.rmi.ServerError;
+import java.util.Objects;
 
 import static utils.ErrorMessages.EMPTY_DATA_PROVIDED;
 
@@ -110,5 +111,18 @@ public class ReceivedData {
         } else {
             throw new ServerError("No data provided", new Error());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ReceivedData that = (ReceivedData) o;
+        return Objects.equals(creditId, that.creditId) && Objects.equals(creditName, that.creditName) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(pesel, that.pesel) && Objects.equals(productName, that.productName) && Objects.equals(productValue, that.productValue);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(creditId, creditName, firstName, lastName, pesel, productName, productValue);
     }
 }

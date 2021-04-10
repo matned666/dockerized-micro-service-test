@@ -40,7 +40,7 @@ public class ClientService extends BaseService {
 //    }
 
     public ClientDTO findClientByCreditId(Long creditId) throws ServerError {
-        return ClientDTO.apply(clientRepository.findProductByCreditId(creditId).orElseThrow(()->new ServerError(CLIENT_NOT_FOUND, new Error())));
+        return ClientDTO.apply(clientRepository.findClientByCreditId(creditId).orElseThrow(()->new ServerError(CLIENT_NOT_FOUND, new Error())));
     }
 
 }

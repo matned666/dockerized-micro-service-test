@@ -73,7 +73,7 @@ public class CreditService extends BaseService {
 
     public void addClientData(List<ReceivedData> creditList, Integer clientPort) {
         creditList.forEach(x->{
-            ReceivedData client =getReceivedData("client", clientPort, x.getCreditId());
+            ReceivedData client = getReceivedData("client", clientPort, x.getCreditId());
             try {
                 x.applyClient(client);
             } catch (ServerError serverError) {

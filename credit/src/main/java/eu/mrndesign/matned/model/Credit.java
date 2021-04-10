@@ -12,9 +12,11 @@ import javax.persistence.Table;
 @Table(name = "CREDIT_ENTITY")
 public class Credit extends BaseEntity implements Editional<CreditDTO> {
 
+
     public static Credit create(CreditDTO applied){
         return new Credit(applied != null? applied.getCreditName() : null);
     }
+
 
     @Column(name = "credit_name")
     private String creditName;
@@ -22,9 +24,11 @@ public class Credit extends BaseEntity implements Editional<CreditDTO> {
     public Credit() {
     }
 
-    private Credit(String creditName) {
+    public Credit(String creditName) {
         this.creditName = creditName;
     }
+
+
 
     public String getCreditName() {
         return creditName;
