@@ -73,7 +73,7 @@ class CreditControllerTest {
         creditName = "asd";
         firstName = "Mattt";
         lastName = "MattNed";
-        pesel = "83090105394";
+        pesel = "81112110131";
         productName = "HomeAlone";
         productValue = "20000";
 
@@ -117,4 +117,42 @@ class CreditControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
     }
+
+    @Test
+    void createCreditStatus400WithWrongPeselGiven_Validation() throws Exception {
+        providedData.setPesel("asd");
+
+        doReturn(CreditDTO.apply(credit)).when(creditService).saveCredit(any(CreditDTO.class));
+        doReturn("http").when(creditService).url(any(), anyInt());
+        doReturn(providedData).when(restTemplate).postForObject("http", providedData, ProvidedDataDTO.class);
+        doReturn(receivedData).when(restTemplate).getForObject("http", ReceivedData.class);
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/")
+                        .content(asJsonString(providedData))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    @Test
+    void createCreditStatus400WithTooShortName_Validation() throws Exception {
+        providedData.setFirstName("a");
+
+        doReturn(CreditDTO.apply(credit)).when(creditService).saveCredit(any(CreditDTO.class));
+        doReturn("http").when(creditService).url(any(), anyInt());
+        doReturn(providedData).when(restTemplate).postForObject("http", providedData, ProvidedDataDTO.class);
+        doReturn(receivedData).when(restTemplate).getForObject("http", ReceivedData.class);
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/")
+                        .content(asJsonString(providedData))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+
 }

@@ -61,7 +61,9 @@ shows records from the first page with 10 records per page, sorted by first name
 ------------------------------
 #Tests
 
-TODO
+Tests for client and credit service and controller<br>
+For product would be a copy-paste, that's the reason why they are abandoned<br>
+
 
 -----------------------------------------
 # Docker
