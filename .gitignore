@@ -9,3 +9,6 @@
 /client/src/main/resources/application-dev.properties
 /credit/src/main/resources/application-dev.properties
 /product/src/main/resources/application-dev.properties
+/common/common.iml
+/common/target/
+
