@@ -1,6 +1,6 @@
 package eu.mrndesign.matned.controller;
 
-import dto.ProvidedDataDTO;
+import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.dto.ProductDTO;
 import eu.mrndesign.matned.service.ProductService;
 import org.springframework.web.bind.annotation.*;

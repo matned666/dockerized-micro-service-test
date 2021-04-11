@@ -1,13 +1,14 @@
-package dto;
+package eu.mrndesign.matned.dto;
 
 
-import validation.IsCorrectPesel;
-import validation.IsNumericDouble;
+import eu.mrndesign.matned.validation.IsCorrectPesel;
+import eu.mrndesign.matned.validation.IsNumericDouble;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 
 public class ProvidedDataDTO{
 

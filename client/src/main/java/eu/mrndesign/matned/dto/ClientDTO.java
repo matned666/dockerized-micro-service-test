@@ -1,13 +1,11 @@
 package eu.mrndesign.matned.dto;
 
-import dto.BaseDTO;
-import dto.ProvidedDataDTO;
 import eu.mrndesign.matned.model.ClientEntity;
 
 import java.rmi.ServerError;
 import java.util.Objects;
 
-import static utils.ErrorMessages.EMPTY_DATA_PROVIDED;
+import static eu.mrndesign.matned.utils.ErrorMessages.EMPTY_DATA_PROVIDED;
 
 public class ClientDTO extends BaseDTO {
 

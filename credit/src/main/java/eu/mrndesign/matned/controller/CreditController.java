@@ -1,10 +1,9 @@
 package eu.mrndesign.matned.controller;
 
-import dto.ProvidedDataDTO;
+import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.dto.CreditDTO;
 import eu.mrndesign.matned.service.CreditService;
 import org.apache.http.impl.client.HttpClients;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.bind.annotation.*;

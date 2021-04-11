@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static utils.JsonOPS.*;
+import static eu.mrndesign.matned.utils.JsonOPS.*;
 
 @ExtendWith({SpringExtension.class})
 @SpringBootTest(classes = {

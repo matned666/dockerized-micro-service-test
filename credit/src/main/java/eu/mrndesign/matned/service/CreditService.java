@@ -6,13 +6,12 @@ import eu.mrndesign.matned.model.Credit;
 import eu.mrndesign.matned.repository.CreditRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import service.BaseService;
 
 import java.rmi.ServerError;
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.ErrorMessages.CREDIT_NOT_FOUND;
+import static eu.mrndesign.matned.utils.ErrorMessages.CREDIT_NOT_FOUND;
 
 @Service
 public class CreditService extends BaseService {

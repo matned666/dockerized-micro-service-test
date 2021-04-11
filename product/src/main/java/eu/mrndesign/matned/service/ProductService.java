@@ -4,13 +4,12 @@ import eu.mrndesign.matned.dto.ProductDTO;
 import eu.mrndesign.matned.model.Product;
 import eu.mrndesign.matned.repository.ProductRepository;
 import org.springframework.stereotype.Service;
-import service.BaseService;
 
 import java.rmi.ServerError;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static utils.ErrorMessages.PRODUCT_NOT_FOUND;
+import static eu.mrndesign.matned.utils.ErrorMessages.PRODUCT_NOT_FOUND;
 
 @Service
 public class ProductService extends BaseService {

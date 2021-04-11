@@ -17,9 +17,9 @@ create-credit(Parent) - main dependencies<br>
 |<br>
 |-------> credit(Child) - port 8089 main application<br>
 |<br>
-|-------> client(Child) - port 8090 - client service<br>
+|-------> client(Child) - port 8090 - client eu.mrndesign.matned.service<br>
 |<br>
-|-------> product(Child) - port 8091 - product service<br>
+|-------> product(Child) - port 8091 - product eu.mrndesign.matned.service<br>
 
 --------------------------------
 # Authentication!
@@ -61,7 +61,7 @@ shows records from the first page with 10 records per page, sorted by first name
 ------------------------------
 #Tests
 
-Tests for client and credit service and controller<br>
+Tests for client and credit eu.mrndesign.matned.service and controller<br>
 For product would be a copy-paste, that's the reason why they are abandoned<br>
 
 

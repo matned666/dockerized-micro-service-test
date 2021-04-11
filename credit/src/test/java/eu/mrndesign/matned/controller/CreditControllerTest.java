@@ -1,10 +1,9 @@
 package eu.mrndesign.matned.controller;
 
-import dto.ProvidedDataDTO;
+import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.CreditApplication;
 import eu.mrndesign.matned.dto.CreditDTO;
 import eu.mrndesign.matned.model.Credit;
-import eu.mrndesign.matned.repository.CreditRepository;
 import eu.mrndesign.matned.service.CreditService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,13 +22,10 @@ import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Field;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static utils.JsonOPS.asJsonString;
+import static eu.mrndesign.matned.utils.JsonOPS.asJsonString;
 
 @ExtendWith({SpringExtension.class})
 @SpringBootTest(classes = {

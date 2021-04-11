@@ -1,4 +1,4 @@
-package utils;
+package eu.mrndesign.matned.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
