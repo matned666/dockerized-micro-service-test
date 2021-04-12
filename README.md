@@ -59,6 +59,7 @@ GET: localhost:8089?page=0&&amount=10&&sort=firstName,asc&&sort=creditName<br>
 shows records from the first page with 10 records per page, sorted by first name asc and credit name asc
 
 ------------------------------
+
 #Tests
 
 Tests for client and credit eu.mrndesign.matned.service and controller<br>
