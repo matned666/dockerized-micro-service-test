@@ -1,6 +1,6 @@
 package eu.mrndesign.matned.service;
 
-import eu.mrndesign.matned.controller.ReceivedData;
+import eu.mrndesign.matned.dto.ReceivedDataDTO;
 import eu.mrndesign.matned.dto.CreditDTO;
 import eu.mrndesign.matned.model.Credit;
 import eu.mrndesign.matned.repository.CreditRepository;
@@ -26,12 +26,12 @@ public class CreditService extends BaseService {
         this.restTemplate = restTemplate;
     }
 
-    public List<ReceivedData> findAllCredits(Integer page, Integer itemsPerPage, String[] sortBy) {
-        List<ReceivedData> creditList = new ArrayList<>();
+    public List<ReceivedDataDTO> findAllCredits(Integer page, Integer itemsPerPage, String[] sortBy) {
+        List<ReceivedDataDTO> creditList = new ArrayList<>();
         creditRepository.findAll(getPageable(page, itemsPerPage, sortBy))
                 .getContent()
                 .forEach(x-> {
-                    ReceivedData data = new ReceivedData(x.getId(), x.getCreditName());
+                    ReceivedDataDTO data = new ReceivedDataDTO(x.getId(), x.getCreditName());
                     creditList.add(data);
                 });
         return creditList;
@@ -59,9 +59,9 @@ public class CreditService extends BaseService {
     }
 
 
-    public void addProductData(List<ReceivedData> creditList, Integer productPort) {
+    public void addProductData(List<ReceivedDataDTO> creditList, Integer productPort) {
         creditList.forEach(x->{
-            ReceivedData product = getReceivedData("product", productPort, x.getCreditId());
+            ReceivedDataDTO product = getReceivedData("product", productPort, x.getCreditId());
             try {
                 x.applyProduct(product);
             } catch (ServerError serverError) {
@@ -70,9 +70,9 @@ public class CreditService extends BaseService {
         });
     }
 
-    public void addClientData(List<ReceivedData> creditList, Integer clientPort) {
+    public void addClientData(List<ReceivedDataDTO> creditList, Integer clientPort) {
         creditList.forEach(x->{
-            ReceivedData client = getReceivedData("client", clientPort, x.getCreditId());
+            ReceivedDataDTO client = getReceivedData("client", clientPort, x.getCreditId());
             try {
                 x.applyClient(client);
             } catch (ServerError serverError) {
@@ -81,17 +81,17 @@ public class CreditService extends BaseService {
         });
     }
 
-    public ReceivedData getCreatedCredit(Long id, Integer productPort, Integer clientPort) throws ServerError {
+    public ReceivedDataDTO getCreatedCredit(Long id, Integer productPort, Integer clientPort) throws ServerError {
         Credit entity = getGreditById(id);
-        ReceivedData credit = new ReceivedData(entity.getId(), entity.getCreditName());
-        ReceivedData product = getReceivedData("product", productPort, entity.getId());
-        ReceivedData client = getReceivedData("client", clientPort, entity.getId());
+        ReceivedDataDTO credit = new ReceivedDataDTO(entity.getId(), entity.getCreditName());
+        ReceivedDataDTO product = getReceivedData("product", productPort, entity.getId());
+        ReceivedDataDTO client = getReceivedData("client", clientPort, entity.getId());
         credit.applyProduct(product);
         credit.applyClient(client);
         return credit;
     }
 
-    private ReceivedData getReceivedData(String host, Integer clientPort, Long id) {
-        return restTemplate.getForObject(url(host, clientPort)+"/"+id, ReceivedData.class);
+    private ReceivedDataDTO getReceivedData(String host, Integer clientPort, Long id) {
+        return restTemplate.getForObject(url(host, clientPort)+"/"+id, ReceivedDataDTO.class);
     }
 }

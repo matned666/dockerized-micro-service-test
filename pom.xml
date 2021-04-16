@@ -40,11 +40,9 @@
 		<module>client</module>
 		<module>credit</module>
 		<module>product</module>
-		<module>common</module>
 	</modules>
 
 	<dependencies>
-
 		<!--        SPRING ESSENTIALS-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

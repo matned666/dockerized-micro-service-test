@@ -3,6 +3,7 @@ package eu.mrndesign.matned.controller;
 import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.CreditApplication;
 import eu.mrndesign.matned.dto.CreditDTO;
+import eu.mrndesign.matned.dto.ReceivedDataDTO;
 import eu.mrndesign.matned.model.Credit;
 import eu.mrndesign.matned.service.CreditService;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +54,7 @@ class CreditControllerTest {
 
     private Credit credit;
     private ProvidedDataDTO providedData;
-    private ReceivedData receivedData;
+    private ReceivedDataDTO receivedDataDTO;
     private String[] sortBy;
 
     static {
@@ -86,12 +87,12 @@ class CreditControllerTest {
         providedData.setProductName(productName);
         providedData.setProductValue(productValue);
 
-        receivedData = new ReceivedData(creditId, creditName);
-        receivedData.setFirstName(firstName);
-        receivedData.setLastName(lastName);
-        receivedData.setPesel(pesel);
-        receivedData.setProductName(productName);
-        receivedData.setProductValue(Double.parseDouble(productValue));
+        receivedDataDTO = new ReceivedDataDTO(creditId, creditName);
+        receivedDataDTO.setFirstName(firstName);
+        receivedDataDTO.setLastName(lastName);
+        receivedDataDTO.setPesel(pesel);
+        receivedDataDTO.setProductName(productName);
+        receivedDataDTO.setProductValue(Double.parseDouble(productValue));
 
         sortBy = new String[1];
         sortBy[0] = "something";
@@ -103,7 +104,7 @@ class CreditControllerTest {
         doReturn(CreditDTO.apply(credit)).when(creditService).saveCredit(any(CreditDTO.class));
         doReturn("http").when(creditService).url(any(), anyInt());
         doReturn(providedData).when(restTemplate).postForObject("http", providedData, ProvidedDataDTO.class);
-        doReturn(receivedData).when(restTemplate).getForObject("http", ReceivedData.class);
+        doReturn(receivedDataDTO).when(restTemplate).getForObject("http", ReceivedDataDTO.class);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/")
                         .content(asJsonString(providedData))
@@ -121,7 +122,7 @@ class CreditControllerTest {
         doReturn(CreditDTO.apply(credit)).when(creditService).saveCredit(any(CreditDTO.class));
         doReturn("http").when(creditService).url(any(), anyInt());
         doReturn(providedData).when(restTemplate).postForObject("http", providedData, ProvidedDataDTO.class);
-        doReturn(receivedData).when(restTemplate).getForObject("http", ReceivedData.class);
+        doReturn(receivedDataDTO).when(restTemplate).getForObject("http", ReceivedDataDTO.class);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/")
                         .content(asJsonString(providedData))
@@ -139,7 +140,7 @@ class CreditControllerTest {
         doReturn(CreditDTO.apply(credit)).when(creditService).saveCredit(any(CreditDTO.class));
         doReturn("http").when(creditService).url(any(), anyInt());
         doReturn(providedData).when(restTemplate).postForObject("http", providedData, ProvidedDataDTO.class);
-        doReturn(receivedData).when(restTemplate).getForObject("http", ReceivedData.class);
+        doReturn(receivedDataDTO).when(restTemplate).getForObject("http", ReceivedDataDTO.class);
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/")
                         .content(asJsonString(providedData))

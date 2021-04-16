@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public abstract class BaseService{
+public abstract class BaseService {
 
 
     @Value("${default.page.start}")

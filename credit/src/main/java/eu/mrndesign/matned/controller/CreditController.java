@@ -2,6 +2,7 @@ package eu.mrndesign.matned.controller;
 
 import eu.mrndesign.matned.dto.ProvidedDataDTO;
 import eu.mrndesign.matned.dto.CreditDTO;
+import eu.mrndesign.matned.dto.ReceivedDataDTO;
 import eu.mrndesign.matned.service.CreditService;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -39,31 +40,31 @@ public class CreditController {
     }
 
     @GetMapping
-    public List<ReceivedData> getCredits(@RequestParam(defaultValue = "${default.sort.by}", name = "sort")
+    public List<ReceivedDataDTO> getCredits(@RequestParam(defaultValue = "${default.sort.by}", name = "sort")
                                                      String[] sort,
-                                         @RequestParam(defaultValue = "${default.page.start}", name = "page")
+                                            @RequestParam(defaultValue = "${default.page.start}", name = "page")
                                                  Integer page,
-                                         @RequestParam(defaultValue = "${default.page.size}", name = "amount")
+                                            @RequestParam(defaultValue = "${default.page.size}", name = "amount")
                                                      Integer amount) {
-        List<ReceivedData> creditList = cS.findAllCredits(page, amount, sort);
+        List<ReceivedDataDTO> creditList = cS.findAllCredits(page, amount, sort);
         cS.addProductData(creditList, productPort);
         cS.addClientData(creditList, clientPort);
         return creditList;
     }
 
     @PostMapping
-    public ReceivedData createCredit(@Valid @RequestBody ProvidedDataDTO data) throws ServerError {
+    public ReceivedDataDTO createCredit(@Valid @RequestBody ProvidedDataDTO data) throws ServerError {
         CreditDTO dto = cS.saveCredit(CreditDTO.createFromProvidedData(data));
         data.setCreditId(dto.getId());
         data.setCreditName(dto.getCreditName());
         restTemplate.postForObject(cS.url("product", productPort), data, ProvidedDataDTO.class);
         restTemplate.postForObject(cS.url("client", clientPort), data, ProvidedDataDTO.class);
-        return restTemplate.getForObject(cS.url("credit", creditPort)+"/credit/credit_response/"+dto.getId(), ReceivedData.class);
+        return restTemplate.getForObject(cS.url("credit", creditPort)+"/credit/credit_response/"+dto.getId(), ReceivedDataDTO.class);
 
     }
 
     @GetMapping("/credit/credit_response/{id}")
-    public ReceivedData showCreatedCredit(@PathVariable Long id) throws ServerError {
+    public ReceivedDataDTO showCreatedCredit(@PathVariable Long id) throws ServerError {
         return cS.getCreatedCredit(id, productPort, clientPort);
     }
 

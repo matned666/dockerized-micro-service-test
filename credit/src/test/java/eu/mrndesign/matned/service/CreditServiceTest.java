@@ -1,7 +1,7 @@
 package eu.mrndesign.matned.service;
 
 import eu.mrndesign.matned.CreditApplication;
-import eu.mrndesign.matned.controller.ReceivedData;
+import eu.mrndesign.matned.dto.ReceivedDataDTO;
 import eu.mrndesign.matned.dto.CreditDTO;
 import eu.mrndesign.matned.model.Credit;
 import eu.mrndesign.matned.repository.CreditRepository;
@@ -64,9 +64,9 @@ class CreditServiceTest {
 
     @Test
     void findAllCredits() {
-        ReceivedData receivedData = new ReceivedData();
+        ReceivedDataDTO receivedDataDTO = new ReceivedDataDTO();
         doReturn(new PageImpl<>(Collections.singletonList(credit))).when(creditRepository).findAll(any(Pageable.class));
-        assertEquals(Collections.singletonList(receivedData), creditService.findAllCredits(1,1,sortBy));
+        assertEquals(Collections.singletonList(receivedDataDTO), creditService.findAllCredits(1,1,sortBy));
     }
 
     @Test
@@ -89,12 +89,12 @@ class CreditServiceTest {
 
     @Test
     void addProductData() {
-        ReceivedData receivedData1 = new ReceivedData(1L, "asd");
-        List<ReceivedData> list = Collections.singletonList(receivedData1);
-        ReceivedData receivedData2 = new ReceivedData();
-        receivedData2.setProductName("product");
-        receivedData2.setProductValue(1000.0);
-        doReturn(receivedData2).when(restTemplate).getForObject("http://product:1000/1", ReceivedData.class);
+        ReceivedDataDTO receivedDataDTO1 = new ReceivedDataDTO(1L, "asd");
+        List<ReceivedDataDTO> list = Collections.singletonList(receivedDataDTO1);
+        ReceivedDataDTO receivedDataDTO2 = new ReceivedDataDTO();
+        receivedDataDTO2.setProductName("product");
+        receivedDataDTO2.setProductValue(1000.0);
+        doReturn(receivedDataDTO2).when(restTemplate).getForObject("http://product:1000/1", ReceivedDataDTO.class);
 
         assertNull(list.get(0).getProductName());
         assertNull(list.get(0).getProductValue());
@@ -109,13 +109,13 @@ class CreditServiceTest {
 
     @Test
     void addClientData() {
-        ReceivedData receivedData1 = new ReceivedData(1L, "asd");
-        List<ReceivedData> list = Collections.singletonList(receivedData1);
-        ReceivedData receivedData2 = new ReceivedData();
-        receivedData2.setFirstName("janusz");
-        receivedData2.setLastName("kowalski");
+        ReceivedDataDTO receivedDataDTO1 = new ReceivedDataDTO(1L, "asd");
+        List<ReceivedDataDTO> list = Collections.singletonList(receivedDataDTO1);
+        ReceivedDataDTO receivedDataDTO2 = new ReceivedDataDTO();
+        receivedDataDTO2.setFirstName("janusz");
+        receivedDataDTO2.setLastName("kowalski");
 
-        doReturn(receivedData2).when(restTemplate).getForObject("http://client:1000/1", ReceivedData.class);
+        doReturn(receivedDataDTO2).when(restTemplate).getForObject("http://client:1000/1", ReceivedDataDTO.class);
 
         assertNull(list.get(0).getFirstName());
         assertNull(list.get(0).getLastName());
@@ -140,19 +140,19 @@ class CreditServiceTest {
         id.setAccessible(true);
         id.set(credit, 1L);
 
-        ReceivedData receivedData2 = new ReceivedData();
-        ReceivedData receivedData3 = new ReceivedData();
-        receivedData2.setFirstName(name);
-        receivedData2.setLastName(surname);
-        receivedData2.setPesel(pesel);
-        receivedData3.setProductName(prod);
-        receivedData3.setProductValue(price);
+        ReceivedDataDTO receivedDataDTO2 = new ReceivedDataDTO();
+        ReceivedDataDTO receivedDataDTO3 = new ReceivedDataDTO();
+        receivedDataDTO2.setFirstName(name);
+        receivedDataDTO2.setLastName(surname);
+        receivedDataDTO2.setPesel(pesel);
+        receivedDataDTO3.setProductName(prod);
+        receivedDataDTO3.setProductValue(price);
 
         doReturn(Optional.of(credit)).when(creditRepository).findById(anyLong());
-        doReturn(receivedData2).when(restTemplate).getForObject("http://client:1000/1", ReceivedData.class);
-        doReturn(receivedData3).when(restTemplate).getForObject("http://product:1000/1", ReceivedData.class);
+        doReturn(receivedDataDTO2).when(restTemplate).getForObject("http://client:1000/1", ReceivedDataDTO.class);
+        doReturn(receivedDataDTO3).when(restTemplate).getForObject("http://product:1000/1", ReceivedDataDTO.class);
 
-        ReceivedData creditData = creditService.getCreatedCredit(1L, 1000, 1000);
+        ReceivedDataDTO creditData = creditService.getCreatedCredit(1L, 1000, 1000);
 
         assertEquals(creditData.getFirstName(), name);
         assertEquals(creditData.getLastName(), surname);

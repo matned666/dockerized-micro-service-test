@@ -1,13 +1,11 @@
-package eu.mrndesign.matned.controller;
-
-import eu.mrndesign.matned.dto.ProvidedDataDTO;
+package eu.mrndesign.matned.dto;
 
 import java.rmi.ServerError;
 import java.util.Objects;
 
 import static eu.mrndesign.matned.utils.ErrorMessages.EMPTY_DATA_PROVIDED;
 
-public class ReceivedData {
+public class ReceivedDataDTO {
 
 
     private Long creditId;
@@ -18,17 +16,17 @@ public class ReceivedData {
     private String productName;
     private Double productValue;
 
-    public ReceivedData() {
+    public ReceivedDataDTO() {
     }
 
-    public ReceivedData(Long id, String creditName) {
+    public ReceivedDataDTO(Long id, String creditName) {
         this.creditId = id;
         this.creditName = creditName;
     }
 
-    public static ReceivedData convert(ProvidedDataDTO provider) throws ServerError {
+    public static ReceivedDataDTO convert(ProvidedDataDTO provider) throws ServerError {
         if(provider != null) {
-            ReceivedData receiver = new ReceivedData(provider.getCreditId(), provider.getCreditName());
+            ReceivedDataDTO receiver = new ReceivedDataDTO(provider.getCreditId(), provider.getCreditName());
             receiver.setFirstName(provider.getFirstName());
             receiver.setLastName(provider.getLastName());
             receiver.setPesel(provider.getPesel());
@@ -94,7 +92,7 @@ public class ReceivedData {
         return productValue;
     }
 
-    public void applyProduct(ReceivedData product) throws ServerError {
+    public void applyProduct(ReceivedDataDTO product) throws ServerError {
         if (product != null) {
             this.productName = product.productName;
             this.productValue = product.productValue;
@@ -103,7 +101,7 @@ public class ReceivedData {
         }
     }
 
-    public void applyClient(ReceivedData client) throws ServerError {
+    public void applyClient(ReceivedDataDTO client) throws ServerError {
         if (client != null) {
             this.firstName = client.firstName;
             this.lastName = client.lastName;
@@ -117,7 +115,7 @@ public class ReceivedData {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ReceivedData that = (ReceivedData) o;
+        ReceivedDataDTO that = (ReceivedDataDTO) o;
         return Objects.equals(creditId, that.creditId) && Objects.equals(creditName, that.creditName) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(pesel, that.pesel) && Objects.equals(productName, that.productName) && Objects.equals(productValue, that.productValue);
     }
 

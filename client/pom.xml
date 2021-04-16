@@ -17,13 +17,5 @@
         <java.version>11</java.version>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>eu.mrndesign.matned</groupId>
-            <artifactId>common</artifactId>
-            <version>ChocoladeIcecream</version>
-        </dependency>
-
-    </dependencies>
 
 </project>
