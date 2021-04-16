@@ -4,16 +4,14 @@ Simple test web app including 3 modules - credit, client, product<br>
 It is run with `docker-compose up`<br>
 Steps:
 - credit receive data, saves new credit and forwards data to product<br>
-- product saves product data and returns it to credit.
+- product saves product data.
 - credit sends data to client
-- client saves client data and returns it to credit
+- client saves client data
 - credit shows written data with generated credit
 ----------------------------
 # Architecture
 
 create-credit(Parent) - main dependencies<br>
-|<br>
-|-------> common(Child) - classes used for all applications <br>
 |<br>
 |-------> credit(Child) - port 8089 main application<br>
 |<br>
