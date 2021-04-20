@@ -6,7 +6,9 @@ services:
     image: 'credit:latest'
     build:
       context: ./
-      dockerfile: credit.Dockerfile
+#      dockerfile: credit.Dockerfile
+      args:
+        APP: credit
     container_name: credit
     depends_on:
       - db
@@ -26,7 +28,9 @@ services:
     image: 'client:latest'
     build:
       context: ./
-      dockerfile: client.Dockerfile
+#      dockerfile: client.Dockerfile
+      args:
+        APP: client
     container_name: client
     depends_on:
       - db
@@ -45,7 +49,9 @@ services:
     image: 'product:latest'
     build:
       context: ./
-      dockerfile: product.Dockerfile
+#      dockerfile: product.Dockerfile
+      args:
+        APP: product
     container_name: product
     depends_on:
       - db
