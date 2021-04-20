@@ -28,7 +28,7 @@ no security included
 # Requirements
 
 - docker, docker-compose
-- maven
+
 --------------------------
 # Usage
 
@@ -68,9 +68,8 @@ For product would be a copy-paste, that's the reason why they are abandoned<br>
 # Docker
 
 Dockerfile and docker-compose.yml<br>
-entrypoint.sh includes jar files generation.<br>
 otherwise:<br>
-`mvn clean install -Dmaven.test.skip=true`<br>
+run with:<br>
 `docker-compose up`
 
 --------------------------
